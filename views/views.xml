@@ -272,7 +272,7 @@
               <field name="pokemon_count" attrs="{'invisible': [('is_trainer', '=', False)]}"/>
             </group>
             <field name="trainer_pokemon_ids" attrs="{'invisible': [('is_trainer', '=', False)]}"/>
-            <button name="%(pokedex_catch_wizard_action)d" string="Catch New Pokemon" 
+            <button name="%(pokedex_app.pokedex_catch_wizard_action)d" string="Catch Pokemon" 
                     type="action" class="oe_highlight" 
                     attrs="{'invisible': [('is_trainer', '=', False)]}"/>
           </page>
@@ -329,8 +329,9 @@
     <!-- API Sync menus -->
     <menuitem name="API Sync" id="pokedex_api_menu" parent="pokedex_config_menu"/>
     <menuitem name="Sync Types" id="pokedex_sync_types_menu" 
-              parent="pokedex_api_menu" action="action_sync_all_types"/>
+          parent="pokedex_api_menu" action="pokedex_app.action_sync_all_types"/>
+
     <menuitem name="Sync Pokemon" id="pokedex_sync_pokemon_menu" 
-              parent="pokedex_api_menu" action="action_sync_pokemon_batch"/>
+          parent="pokedex_api_menu" action="pokedex_app.action_sync_pokemon_batch"/>
   </data>
 </odoo>

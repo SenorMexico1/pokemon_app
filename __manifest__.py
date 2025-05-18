@@ -10,17 +10,17 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web', 'base_automation'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
-        'data/ir_cron.xml',
         'data/ir_actions_server.xml',
         'wizards/pokemon_catch_views.xml',
         'wizards/pokemon_search_views.xml',
+        'views/views.xml',
+        'views/templates.xml',
+        'data/ir_cron.xml',
     ],
     # assets
     'qweb': [

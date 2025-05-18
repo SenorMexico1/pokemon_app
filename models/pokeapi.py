@@ -14,6 +14,7 @@ class PokemonAPISync(models.Model):
     
     @api.model
     def _get_pokemon_from_api(self, pokemon_name_or_id):
+        print(pokemon_name_or_id)
         """Fetch a single Pokemon from the PokeAPI"""
         try:
             url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name_or_id.lower()}"

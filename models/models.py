@@ -65,6 +65,8 @@ class Trainer(models.Model):
     trainer_pokemon_ids = fields.One2many('pokedex.trainer.pokemon', 'trainer_id', string='Caught Pokemon')
     pokemon_count = fields.Integer(string='Pokemon Count', compute='_compute_pokemon_count')
     trainer_level = fields.Integer(string='Trainer Level', default=1)
+    partner_gid = fields.Integer(string='Partner GID')
+    additional_info = fields.Text(string='Additional Info')
     
     @api.depends('trainer_pokemon_ids')
     def _compute_pokemon_count(self):
