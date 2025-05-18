@@ -1,0 +1,27 @@
+.o_pokemon_kanban {
+    position: relative;
+    height: 150px;
+}
+
+.o_pokemon_kanban .o_kanban_image_fill_left {
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pokemon-image {
+    max-height: 150px;
+    max-width: 150px;
+    object-fit: contain;
+}
+
+.o_pokemon_placeholder {
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    background-color: #f2f2f2;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PokemonImageTemplate">
+        <div class="o_pokemon_image">
+            <!-- Content will be filled by widget _render method -->
+        </div>
+    </t>
+</templates>

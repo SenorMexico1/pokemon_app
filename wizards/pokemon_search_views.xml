@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Pokemon Search Wizard View -->
+        <record model="ir.ui.view" id="pokedex_search_wizard_form">
+            <field name="name">pokedex.search.wizard.form</field>
+            <field name="model">pokedex.search.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="state" invisible="1"/>
+                    <group attrs="{'invisible': [('state', '=', 'results')]}">
+                        <field name="name" placeholder="Enter Pokemon name or ID (e.g., pikachu or 25)"/>
+                    </group>
+                    <group attrs="{'invisible': [('state', '=', 'search')]}">
+                        <field name="result_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="action_search" string="Search" type="object" 
+                                class="btn-primary" attrs="{'invisible': [('state', '=', 'results')]}"/>
+                        <button name="action_select_pokemon" string="Select" class="btn-primary" type="object"
+                                attrs="{'invisible': [('state', '=', 'search')]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="pokedex_search_wizard_action">
+            <field name="name">Search Pokemon</field>
+            <field name="res_model">pokedex.search.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

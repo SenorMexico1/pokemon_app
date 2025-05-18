@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Catch Pokemon Wizard -->
+        <record model="ir.ui.view" id="pokedex_catch_wizard_form">
+            <field name="name">pokedex.catch.wizard.form</field>
+            <field name="model">pokedex.catch.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="trainer_id"/>
+                        <field name="pokemon_id"/>
+                        <button name="action_search_pokemon" string="Search Pokemon" 
+                                type="object" class="btn-secondary"
+                                attrs="{'invisible': [('result_message', '!=', False)]}"/>
+                        <field name="nickname" placeholder="Optional Nickname"/>
+                        <field name="catch_probability"/>
+                    </group>
+                    <div attrs="{'invisible': [('result_message', '=', False)]}">
+                        <h3><field name="result_message"/></h3>
+                    </div>
+                    <footer>
+                        <button name="action_try_catch" string="Try to Catch" 
+                                type="object" class="btn-primary" 
+                                attrs="{'invisible': [('result_message', '!=', False)]}"/>
+                        <button string="Close" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="pokedex_catch_wizard_action">
+            <field name="name">Catch Pokemon</field>
+            <field name="res_model">pokedex.catch.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

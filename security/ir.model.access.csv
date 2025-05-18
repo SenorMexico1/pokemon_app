@@ -1,2 +1,9 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_pokedex_app_pokedex_app,pokedex_app.pokedex_app,model_pokedex_app_pokedex_app,base.group_user,1,1,1,1
+access_pokedex_pokemon,pokedex.pokemon,model_pokedex_pokemon,base.group_user,1,1,1,1
+access_pokedex_type,pokedex.type,model_pokedex_type,base.group_user,1,1,1,1
+access_pokedex_skill,pokedex.skill,model_pokedex_skill,base.group_user,1,1,1,1
+access_pokedex_trainer_pokemon,pokedex.trainer.pokemon,model_pokedex_trainer_pokemon,base.group_user,1,1,1,1
+access_pokedex_catch_wizard,pokedex.catch.wizard,model_pokedex_catch_wizard,base.group_user,1,1,1,0
+access_pokedex_search_wizard,pokedex.search.wizard,model_pokedex_search_wizard,base.group_user,1,1,1,0
+access_pokedex_experience_cron,pokedex.experience.cron,model_pokedex_experience_cron,base.group_system,1,1,1,1
+access_pokedex_api_sync,pokedex.api.sync,model_pokedex_api_sync,base.group_user,1,1,1,0
