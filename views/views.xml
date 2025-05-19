@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <!-- Pokemon Type Views -->
+    <record model="ir.ui.view" id="pokedex_type_tree">
+      <field name="name">pokedex.type.tree</field>
+      <field name="model">pokedex.type</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="color"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_type_form">
+      <field name="name">pokedex.type.form</field>
+      <field name="model">pokedex.type</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="color" widget="color"/>
+            </group>
+            <notebook>
+              <page string="Type Relations">
+                <group>
+                  <field name="strength_against" widget="many2many_tags"/>
+                  <field name="weakness_against" widget="many2many_tags"/>
+                </group>
+              </page>
+              <page string="Pokemon">
+                <field name="pokemon_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <!-- Pokemon Skill Views -->
+    <record model="ir.ui.view" id="pokedex_skill_tree">
+      <field name="name">pokedex.skill.tree</field>
+      <field name="model">pokedex.skill</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="type_id"/>
+          <field name="power"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_skill_form">
+      <field name="name">pokedex.skill.form</field>
+      <field name="model">pokedex.skill</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="type_id"/>
+              <field name="power"/>
+              <field name="description"/>
+            </group>
+            <notebook>
+              <page string="Pokemon with this Skill">
+                <field name="pokemon_ids"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <!-- Pokemon Views -->
+    <record model="ir.ui.view" id="pokedex_pokemon_tree">
+      <field name="name">pokedex.pokemon.tree</field>
+      <field name="model">pokedex.pokemon</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="pokedex_number"/>
+          <field name="name"/>
+          <field name="type_id"/>
+          <field name="secondary_type_id"/>
+          <field name="base_hp"/>
+          <field name="base_attack"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_pokemon_form">
+      <field name="name">pokedex.pokemon.form</field>
+      <field name="model">pokedex.pokemon</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="action_refresh_from_api" string="Refresh from PokeAPI" 
+                    type="object" class="btn-secondary"/>
+          </header>
+          <sheet>
+            <field name="image_url" widget="pokedex_image" class="oe_avatar"/>
+            <div class="oe_title">
+              <h1>
+                <field name="name" placeholder="Pokemon Name"/>
+              </h1>
+              <h3>
+                <field name="pokedex_number" placeholder="Pokedex #"/>
+              </h3>
+            </div>
+            <group>
+              <group>
+                <field name="type_id"/>
+                <field name="secondary_type_id"/>
+                <field name="height"/>
+                <field name="weight"/>
+              </group>
+              <group>
+                <field name="base_hp"/>
+                <field name="base_attack"/>
+                <field name="base_defense"/>
+                <field name="base_speed"/>
+              </group>
+            </group>
+            <notebook>
+              <page string="Skills">
+                <field name="skill_ids" widget="many2many_tags"/>
+              </page>
+              <page string="Description">
+                <field name="description"/>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_pokemon_kanban">
+      <field name="name">pokedex.pokemon.kanban</field>
+      <field name="model">pokedex.pokemon</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="id"/>
+          <field name="name"/>
+          <field name="pokedex_number"/>
+          <field name="type_id"/>
+          <field name="image_url"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_pokemon_kanban">
+                <div class="o_kanban_image_fill_left" t-attf-style="background-image: url(#{record.image_url.raw_value});"/>
+                <div class="oe_kanban_details">
+                  <strong class="o_kanban_record_title">
+                    <field name="name"/>
+                  </strong>
+                  <div class="o_kanban_tags_section">
+                    <span class="badge badge-pill">
+                      <field name="type_id"/>
+                    </span>
+                  </div>
+                  <ul>
+                    <li>Pokedex #<field name="pokedex_number"/></li>
+                    <li>HP: <field name="base_hp"/></li>
+                    <li>Attack: <field name="base_attack"/></li>
+                  </ul>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_pokemon_search">
+      <field name="name">pokedex.pokemon.search</field>
+      <field name="model">pokedex.pokemon</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="pokedex_number"/>
+          <field name="type_id"/>
+          <field name="secondary_type_id"/>
+          <filter string="Primary Water Type" name="water_type" 
+                  domain="[('type_id.name', '=', 'Water')]"/>
+          <filter string="Primary Fire Type" name="fire_type" 
+                  domain="[('type_id.name', '=', 'Fire')]"/>
+          <filter string="High HP" name="high_hp" 
+                  domain="[('base_hp', '>', 100)]"/>
+          <group expand="0" string="Group By">
+            <filter string="Type" name="groupby_type" context="{'group_by': 'type_id'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_pokemon_graph">
+      <field name="name">pokedex.pokemon.graph</field>
+      <field name="model">pokedex.pokemon</field>
+      <field name="arch" type="xml">
+        <graph string="Pokemon per Type" type="bar">
+          <field name="type_id"/>
+          <field name="name" type="measure"/>
+        </graph>
+      </field>
+    </record>
+    
+    <!-- Trainer Pokemon Views -->
+    <record model="ir.ui.view" id="pokedex_trainer_pokemon_tree">
+      <field name="name">pokedex.trainer.pokemon.tree</field>
+      <field name="model">pokedex.trainer.pokemon</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="trainer_id"/>
+          <field name="pokemon_id"/>
+          <field name="nickname"/>
+          <field name="level"/>
+          <field name="experience"/>
+          <field name="hp"/>
+          <field name="attack"/>
+        </tree>
+      </field>
+    </record>
+    
+    <record model="ir.ui.view" id="pokedex_trainer_pokemon_form">
+      <field name="name">pokedex.trainer.pokemon.form</field>
+      <field name="model">pokedex.trainer.pokemon</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="level_up" string="Level Up" type="object" class="oe_highlight"/>
+          </header>
+          <sheet>
+            <field name="image_url" widget="pokedex_image" class="oe_avatar"/>
+            <div class="oe_title">
+              <h1>
+                <field name="nickname" placeholder="Nickname"/>
+              </h1>
+              <h3>
+                <field name="pokemon_id"/>
+              </h3>
+            </div>
+            <group>
+              <group>
+                <field name="trainer_id"/>
+                <field name="level"/>
+                <field name="experience"/>
+              </group>
+              <group>
+                <field name="hp"/>
+                <field name="attack"/>
+                <field name="defense"/>
+                <field name="speed"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+    <!-- Trainer Views (Extended from res.partner) -->
+    <record model="ir.ui.view" id="pokedex_trainer_form">
+      <field name="name">pokedex.trainer.form</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+          <page string="Pokemon Trainer" attrs="{'invisible': [('is_trainer', '=', False)]}">
+            <group>
+              <field name="is_trainer"/>
+              <field name="trainer_level" attrs="{'invisible': [('is_trainer', '=', False)]}"/>
+              <field name="pokemon_count" attrs="{'invisible': [('is_trainer', '=', False)]}"/>
+            </group>
+            <field name="trainer_pokemon_ids" attrs="{'invisible': [('is_trainer', '=', False)]}"/>
+            <button name="%(pokedex_app.pokedex_catch_wizard_action)d" string="Catch Pokemon" 
+                    type="action" class="oe_highlight" 
+                    attrs="{'invisible': [('is_trainer', '=', False)]}"/>
+          </page>
+        </xpath>
+        <xpath expr="//field[@name='category_id']" position="after">
+          <field name="is_trainer"/>
+        </xpath>
+      </field>
+    </record>
+    
+    <!-- Actions and Menus -->
+    <record model="ir.actions.act_window" id="pokedex_type_action">
+      <field name="name">Pokemon Types</field>
+      <field name="res_model">pokedex.type</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="pokedex_skill_action">
+      <field name="name">Pokemon Skills</field>
+      <field name="res_model">pokedex.skill</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="pokedex_pokemon_action">
+      <field name="name">Pokemon</field>
+      <field name="res_model">pokedex.pokemon</field>
+      <field name="view_mode">kanban,tree,form,graph</field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="pokedex_trainer_pokemon_action">
+      <field name="name">Trainer Pokemon</field>
+      <field name="res_model">pokedex.trainer.pokemon</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    
+    <!-- Main Menu -->
+    <menuitem name="Pokedex" id="pokedex_menu_root"/>
+    
+    <!-- First level menu items -->
+    <menuitem name="Pokemon" id="pokedex_pokemon_menu" parent="pokedex_menu_root"/>
+    <menuitem name="Trainers" id="pokedex_trainer_menu" parent="pokedex_menu_root"/>
+    <menuitem name="Configuration" id="pokedex_config_menu" parent="pokedex_menu_root"/>
+    
+    <!-- Second level menu items -->
+    <menuitem name="Pokemon List" id="pokedex_pokemon_list_menu" 
+              parent="pokedex_pokemon_menu" action="pokedex_pokemon_action"/>
+    <menuitem name="Trainer Pokemon" id="pokedex_trainer_pokemon_menu" 
+              parent="pokedex_trainer_menu" action="pokedex_trainer_pokemon_action"/>
+    <menuitem name="Types" id="pokedex_type_menu" 
+              parent="pokedex_config_menu" action="pokedex_type_action"/>
+    <menuitem name="Skills" id="pokedex_skill_menu" 
+              parent="pokedex_config_menu" action="pokedex_skill_action"/>
+              
+    <!-- API Sync menus -->
+    <menuitem name="API Sync" id="pokedex_api_menu" parent="pokedex_config_menu"/>
+    <menuitem name="Sync Types" id="pokedex_sync_types_menu" 
+          parent="pokedex_api_menu" action="pokedex_app.action_sync_all_types"/>
+
+    <menuitem name="Sync Pokemon" id="pokedex_sync_pokemon_menu" 
+          parent="pokedex_api_menu" action="pokedex_app.action_sync_pokemon_batch"/>
+  </data>
+</odoo>

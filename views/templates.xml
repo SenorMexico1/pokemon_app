@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="pokedex_app assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pokedex_app/static/src/js/pokemon_image_widget.js"/>
+                <link rel="stylesheet" href="/pokedex_app/static/src/css/pokemon_styles.css"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
