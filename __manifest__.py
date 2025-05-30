@@ -6,7 +6,14 @@
     'version': '0.1',
     'depends': ['base', 'web', 'base_automation'],
     'data': [
-
+        'security/ir.model.access.csv',
+        'data/cron.xml',
+        'views/templates.xml',
+        'views/views.xml',
+        'wizards/views/catch_wizard_views.xml',
+        'wizards/views/search_wizard_views.xml',
+        'data/automated_actions.xml',
+        'data/server_actions.xml',
     ],
     'installable': True,
     'application': True,

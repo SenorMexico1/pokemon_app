@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Search Wizard Form View -->
+        <record id="pokedex_search_wizard_form" model="ir.ui.view">
+            <field name="name">pokedex.search.wizard.form</field>
+            <field name="model">pokedex.search.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Search Pokemon">
+                    <group>
+                        <field name="search_term" placeholder="e.g., 'pikachu' or '25'"/>
+                    </group>
+                    <group attrs="{'invisible': [('search_message', '=', False)]}">
+                        <field name="search_message" readonly="1" nolabel="1"/>
+                    </group>
+                    <footer>
+                        <button name="search_pokemon" string="Search" 
+                                type="object" class="btn-primary"/>
+                        <button name="import_batch" string="Import Gen 1 (151 Pokemon)" 
+                                type="object" class="btn-warning"
+                                confirm="This will import all 151 Generation 1 Pokemon. This may take several minutes. Continue?"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        
+        <!-- Action to open the search wizard -->
+        <record id="pokedex_search_wizard_action" model="ir.actions.act_window">
+            <field name="name">Search/Import Pokemon</field>
+            <field name="res_model">pokedex.search.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <!-- Menu item for searching Pokemon -->
+        <menuitem id="menu_search_pokemon_wizard"
+                  name="Search/Import Pokemon"
+                  parent="pokedex_pokemon_menu"
+                  action="pokedex_search_wizard_action"
+                  sequence="5"/>
+    </data>
+</odoo>
